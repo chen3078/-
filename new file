@@ -1,0 +1,38 @@
+3-6 租用游艇问题
+#include<iostream>
+#include<fstream>
+const int M=200;                              //假定这里可以存放200个出租站
+int rent[200][200];                           //rent的数组是用来存放租金
+int rentQes(int n){
+int i,j,k;
+int mark=n-1;                                 //定义了一个下标的量
+j=n;                                          //j表示从最后一个开始检索
+for(i=n-2;i>=1;i--){                          //这里表示从倒数第二行开始往前遍历
+for(k=mark;k=n-1;k++){                        //k是用来控制每行的列和下一行的行
+if(rent[i][j]>(rent[i][k]+rent[k][j])){       //这个则是这样的：rent[3][5]=rent[3][4]+rent[4][5]，就是用k在两个站点之中做一个标记
+rent[i][j]=rent[i][k]+rent[k][j];
+else{
+rent[i][j]=rent[i][j];
+}
+}
+mark--:                                       //从后往前进行索引
+}
+return rent[1][n];                            //最后我们所求的值就是最后右上角的值，把我们所需的值往后移到最后一位
+}
+int main()
+ifstream in;                                  //文件输入
+ofstream out;                                 //文件输出
+in.open("input.txt");
+out.open("output.txt");
+int n;
+in>>n;
+int j,k=2;
+for(int i=1;i<=n-1;i++){
+for(j=k;j<=n;j++){
+in>>rent[i][j];                               //在此处就是将最后所需的值放到右上角
+}
+k++;
+}
+out<<rentQes(n)<<endl;
+return 0;
+}
